@@ -45,16 +45,12 @@ const getBooks = (request, response) => {
     })
 };
 
-const createBook = (request, response) => {
-    console.log(request.body);
+const createBook = async (request, response) => {
     const { name } = request.body
-    pgClient.query('INSERT INTO books (name) VALUES ($1) RETURNING ID', [name], (error, result) => {
-    if (error) {
-      throw error
-    }
-    console.log(result);
-    response.status(201).send(`Book added with ID: ${result.rows[0].id}`)
-    })
+    const result = await pgClient.query('INSERT INTO books (name) VALUES ($1) RETURNING ID', 
+        [name]);
+    const book = {id:result.rows[0].id, name: name};
+    return book;
 };
   
 module.exports = {

@@ -25,9 +25,30 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
+const searchInCache =  (request, response) => {
+    const id = parseInt(request.params.id);
+    redisClient.get(id, (err, result) => {
+        if (result) {
+            console.log("Loaded from cache");
+            return response.status(200).json(result);
+        } else {
+            console.log("loaded from db");
+            return pool.getBookById(request, response);
+        }
+    });
+};
+
+const createWithCache = async (request, response) => {
+    const createdBook = await pool.createBook(request, response);
+    const book = JSON.stringify(createdBook);
+    console.log(`Caching new book ${book}`);
+    redisClient.set(createdBook.id, book);
+    response.status(201).send(`Book added with ID: ${createdBook.id}`)
+};
+
 app.get("/search", pool.getBooks);
-app.get("/search/:id", pool.getBookById);
-app.post("/add", pool.createBook);
+app.get("/search/:id", searchInCache);
+app.post("/add", createWithCache);
 
 const PORT = 5000;
 
