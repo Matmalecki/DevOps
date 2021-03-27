@@ -14,13 +14,13 @@ pgClient.on("error", () => {
 
 pgClient
     .query("CREATE TABLE IF NOT EXISTS books" + 
-    "(ID SERIAL PRIMARY KEY, name VARCHAR(30))")
+    "(ID SERIAL PRIMARY KEY, title VARCHAR(30), author VARCHAR(30))")
     .catch( (err) => {
         console.log(err);
     });
 
 // pgClient
-//     .query('INSERT INTO books (name) VALUES ($1)', ["sample_book"])
+//     .query('INSERT INTO books (title) VALUES ($1, $2)', ["sample_book", "sample_author"])
 //     .catch( (err) => {
 //         console.log(err);
 //     });
@@ -46,16 +46,15 @@ const getBooks = (request, response) => {
 };
 
 const createBook = async (request, response) => {
-    const { name } = request.body
-    const result = await pgClient.query('INSERT INTO books (name) VALUES ($1) RETURNING ID', 
-        [name]);
-    const book = {id:result.rows[0].id, name: name};
+    const { name, author } = request.body
+    const result = await pgClient.query('INSERT INTO books (title, author) VALUES ($1, $2) RETURNING ID', 
+        [name, author]);
+    const book = {id:result.rows[0].id, name: name, author: author};
     return book;
 };
   
 module.exports = {
     getBookById,
     createBook,
-    getBooks,
-    getBookById
+    getBooks
   }
