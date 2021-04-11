@@ -20,3 +20,9 @@ Inna usługa -> inny kontener
 - docker run -p HOSTPORT:CONTAINERPORT IMAGE -> zacznij nowy kontener z zmapowanym portem
 - docker network ls -> wyświetla dostępne networki
 - docker network inspect [NETWORK] -> sprawdź ustawienia sieci
+
+
+# odpalenie backendu
+- docker run -v C:\Users\mateu\Documents\TechnologieDevOps\mybackend\postgresdata:/var/lib/postgresql/data --rm --name=mypostgres --network=mymulticont -e POSTGRES_PASSWORD=qwe123qwe postgres:alpine
+- docker run --name=myredis --network=mymulticont --rm redis:alpine
+- docker run -p 5000:5000 --rm --network=mymulticont matmalecki/mybackend

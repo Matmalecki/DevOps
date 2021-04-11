@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from "react";
 import axios from 'axios';
 
-const Post = (props) => {
+const Books = (props) => {
     const [posts, setPosts] = useState([]);
     useEffect(()=> {
-        axios.get('http://localhost:5000/search')
+        axios.get('http://localhost:5000/book')
             .then(response => setPosts(response.data))
             .catch(error => console.log(error));
     },[]);
@@ -27,4 +27,4 @@ const Post = (props) => {
 };
 
 
-export default Post;
+export default Books;

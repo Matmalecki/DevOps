@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import './App.css';
-import Post from './Post.js'
-import MyForm from './MyForm.js'
+import Books from './Books.js'
+import BookForm from './BookForm.js'
 
 function App() {
   return (
     <div>
-      <Post/>
-      <MyForm/>
+      <Books/>
+      <BookForm/>
     </div>
   );
 }

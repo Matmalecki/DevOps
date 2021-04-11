@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
-const MyForm = (props) => {
+const BookForm = (props) => {
 
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
@@ -9,7 +9,7 @@ const MyForm = (props) => {
     const handleSubmit = (event) => {
         console.log(`Dane do wyslania ${title} oraz ${author}`);
 
-        axios.post('http://localhost:5000/add', {name:title, author:author})
+        axios.post('http://localhost:5000/', {name:title, author:author})
             .then(response => console.log(response))
             .catch(error => console.log(error));
 
@@ -27,4 +27,4 @@ const MyForm = (props) => {
 };
 
 
-export default MyForm;
+export default BookForm;
