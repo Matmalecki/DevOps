@@ -19,13 +19,6 @@ pgClient
         console.log(err);
     });
 
-// pgClient
-//     .query('INSERT INTO books (title) VALUES ($1, $2)', ["sample_book", "sample_author"])
-//     .catch( (err) => {
-//         console.log(err);
-//     });
-
-
 const getBookById = (request, response) => {
     const id = parseInt(request.params.id)
     pgClient.query('SELECT * FROM books WHERE id = $1', [id], (error, result) => {
@@ -52,9 +45,29 @@ const createBook = async (request, response) => {
     const book = {id:result.rows[0].id, name: name, author: author};
     return book;
 };
-  
+
+const deleteBook = (request, response) => {
+    const id = parseInt(request.params.id);
+    pgClient.query('DELETE FROM books WHERE id = $1', [id], (error, result) => {
+        if (error){
+            throw error;
+        }
+        response.status(204);
+    });
+};
+
+const updateBook = async (request, response) => {
+    const id = parseInt(request.params.id); 
+    const { name, author } = request.body;
+    const result = await pgClient.query('UPDATE books SET title = $1, author = $2 WHERE id = $3',  [name, author, id]);
+    const book = {id:id, name:name, author:author};
+    return book;
+};
+
 module.exports = {
     getBookById,
     createBook,
-    getBooks
+    getBooks,
+    deleteBook,
+    updateBook
   }

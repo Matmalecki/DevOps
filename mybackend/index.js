@@ -46,9 +46,24 @@ const createWithCache = async (request, response) => {
     response.status(201).send(`Book added with ID: ${createdBook.id}`)
 };
 
-app.get("/search", pool.getBooks);
-app.get("/search/:id", searchInCache);
-app.post("/add", createWithCache);
+const deleteBook = (request, response) => {
+    redisClient.del(request.params.id);
+    pool.deleteBook(request, response);
+};
+
+const updateBook = async (request, response) => {
+    const updatedBook = await pool.updateBook(request, response);
+    const book = JSON.stringify(updatedBook);
+    console.log(`Caching updated book ${book}`);
+    redisClient.set(updatedBook.id, book);
+    response.status(201).send(`Book updated with ID: ${updatedBook.id}`)
+}
+
+app.get("/book", pool.getBooks);
+app.get("/book/:id", searchInCache);
+app.post("/", createWithCache);
+app.delete("/book/:id", deleteBook)
+app.put("/book/:id", updateBook);
 
 const PORT = 5000;
 
