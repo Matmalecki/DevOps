@@ -1,6 +1,7 @@
 # Notatki
-IMAGE -> plik binarny w którym jest snapshot filesystemu + Proces główny kontenera
+- IMAGE -> plik binarny w którym jest snapshot filesystemu + Proces główny kontenera
 Inna usługa -> inny kontener
+- Docker compose -> Automatyzacja polecen + networking 
 # Polecenia
 - docker run hello-world
 - docker run redis
@@ -17,3 +18,5 @@ Inna usługa -> inny kontener
 - docker pull IMAGE[:TAG] -> pobierz image
 - docker push IMAGE[:TAG] -> wrzuć image do repozytorium
 - docker run -p HOSTPORT:CONTAINERPORT IMAGE -> zacznij nowy kontener z zmapowanym portem
+- docker network ls -> wyświetla dostępne networki
+- docker network inspect [NETWORK] -> sprawdź ustawienia sieci
