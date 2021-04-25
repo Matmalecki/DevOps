@@ -1,0 +1,44 @@
+version: '3'
+
+services: 
+  myredis:
+    image: 'redis:alpine'
+  mypostgres:
+    image: 'postgres:alpine'
+    environment: 
+      - POSTGRES_PASSWORD=qwe123qwe
+      - POSTGRES_DB=myappdb
+      - POSTGRES_USER=myappuser
+    volumes:
+      - C:\Users\mateu\Documents\TechnologieDevops\volumes\pg_data:/var/lib/postgresql/data
+  mybackend:
+    build:
+      dockerfile: Dockerfile
+      context: ./mybackend
+    volumes: 
+      - /opt/app/node_modules
+      - C:\Users\mateu\Documents\TechnologieDevops\DevOps\mybackend/:/opt/app
+    environment:
+      - POSTGRES_PASSWORD=qwe123qwe
+      - POSTGRES_DB=myappdb
+      - POSTGRES_USER=myappuser
+      - REDIS_HOST=myredis
+      - POSTGRES_HOST=mypostgres
+    ports:
+      - "5000:5000"
+  mynginx:
+      restart: always
+      build:
+        dockerfile: Dockerfile
+        context: ./mynginx
+      ports:
+        - '9090:80'
+  myfrontend:
+      build:
+        dockerfile: Dockerfile
+        context: ./myfrontend
+      environment: 
+        CHOKIDAR_USEPOLLING: "true"
+      volumes:
+        - /opt/app/node_modules
+        - C:\Users\mateu\Documents\TechnologieDevops\DevOps\myfrontend:/opt/app  

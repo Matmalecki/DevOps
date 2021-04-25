@@ -9,7 +9,7 @@ const BookForm = (props) => {
     const handleSubmit = (event) => {
         console.log(`Dane do wyslania ${title} oraz ${author}`);
 
-        axios.post('http://localhost:5000/', {name:title, author:author})
+        axios.post('/api/', {name:title, author:author})
             .then(response => console.log(response))
             .catch(error => console.log(error));
 
