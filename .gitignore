@@ -1,3 +1,4 @@
-mybackend/postgresdata/
-
+mybackend/data/
+myfrontend/data/
 *.lock
+

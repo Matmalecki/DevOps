@@ -4,19 +4,19 @@ import axios from 'axios';
 const Books = (props) => {
     const [posts, setPosts] = useState([]);
     useEffect(()=> {
-        axios.get('/api/book')
+        axios.get('http://localhost:5000/book')
             .then(response => setPosts(response.data))
             .catch(error => console.log(error));
     },[]);
 
     const deletePost = (id) => {
-        axios.delete(`/api/book/${id}`)
+        axios.delete(`http://localhost:5000/book/${id}`)
             .then(response => setPosts(response.data))
             .catch(error => console.log(error));
     };
 
     const updatePost = (post) => {
-        axios.put(`/api/book/${post.id}`, 
+        axios.put(`http://localhost:5000/book/${post.id}`, 
         {id: post.id, name:post.title+"_updated", author:post.author+"_updated"})
             .catch(error => console.log(error));
     };

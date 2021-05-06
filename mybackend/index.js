@@ -1,12 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+const redis = require('redis');
+const pool = require('./postgres_manager');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-const redis = require('redis');
-const pool = require('./postgres_manager');
 
 const redisClient = redis.createClient({
     host: "myredis",

@@ -7,21 +7,21 @@ services:
     image: 'postgres:alpine'
     environment: 
       - POSTGRES_PASSWORD=qwe123qwe
-      - POSTGRES_DB=myappdb
-      - POSTGRES_USER=myappuser
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
     volumes:
-      - C:\Users\mateu\Documents\TechnologieDevops\volumes\pg_data:/var/lib/postgresql/data
+      - /pg_data/:/var/lib/postgresql/data
   mybackend:
     build:
       dockerfile: Dockerfile
       context: ./mybackend
     volumes: 
       - /opt/app/node_modules
-      - C:\Users\mateu\Documents\TechnologieDevops\DevOps\mybackend/:/opt/app
+      - /mybackend/data/:/opt/app
     environment:
       - POSTGRES_PASSWORD=qwe123qwe
-      - POSTGRES_DB=myappdb
-      - POSTGRES_USER=myappuser
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres 
       - REDIS_HOST=myredis
       - POSTGRES_HOST=mypostgres
     ports:
