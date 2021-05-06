@@ -17,15 +17,13 @@ services:
       context: ./mybackend
     volumes: 
       - /opt/app/node_modules
-      - /mybackend/data/:/opt/app
+      - C:\Users\mateu\Documents\TechnologieDevops\DevOps\mybackend/:/opt/app
     environment:
       - POSTGRES_PASSWORD=qwe123qwe
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres 
       - REDIS_HOST=myredis
       - POSTGRES_HOST=mypostgres
-    ports:
-      - "5000:5000"
   mynginx:
       restart: always
       build:
