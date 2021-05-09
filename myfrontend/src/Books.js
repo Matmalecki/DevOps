@@ -6,7 +6,8 @@ const Books = (props) => {
     const [id, setId] = useState(null);
     const [title, setTitle] = useState(props.title);
     const [author, setAuthor] = useState(props.author);
-
+    const [search, setSearch] = useState("");
+    
     useEffect(()=> {
         axios.get('api/book')
             .then(response => setPosts(response.data))
@@ -45,16 +46,26 @@ const Books = (props) => {
     };
 
     return (<div> 
-                <input type='text' value={title} onChange={event=>setTitle(event.target.value)}/> <br/>
-                <input type='text' value={author} onChange={event=>setAuthor(event.target.value)}/> <br/>
+                <input type='text' value={id} disabled={true}/> 
+                <div>
+                    <p>Tytuł</p>
+                    <input type='text' value={title} onChange={event=>setTitle(event.target.value)}/> 
+                </div>
+                <div>
+                    <p>Autor</p>
+                    <input type='text' value={author} onChange={event=>setAuthor(event.target.value)}/> 
+                </div>
                 <input type='submit' value='OK' onClick={handleSubmit}/>
-                {posts.map(post => (
-                    <div key={post.id}>
-                        {post.title}, {post.author}
-                        <button onClick={() => deletePost(post.id)}>X</button>
-                        <button onClick={() => setUpdatedPost(post)}>Update</button>
-                    </div>
+                {posts.filter(post => post.title.includes(search) || post.author.includes(search))
+                    .map(post => (
+                        <div key={post.id}>
+                            {post.title}, {post.author}
+                            <button onClick={() => deletePost(post.id)}>X</button>
+                            <button onClick={() => setUpdatedPost(post)}>Update</button>
+                        </div>
                 ))}
+                <p>Wyszukaj</p>
+                <input type='text' value={search} onChange={event=>setSearch(event.target.value)}/>
             </div>
     );
 };
