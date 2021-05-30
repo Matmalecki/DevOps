@@ -1,4 +1,5 @@
 mybackend/data/
 myfrontend/data/
 *.lock
+node_modules
 
