@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mypostgres-config
+
+data:
+  PGHOST: postgres
+  PGUSER: postgres
+  PGDATABASE: postgres
