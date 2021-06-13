@@ -17,7 +17,7 @@ spec:
       containers:
         - name: my-redis-container
           image: redis
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       type: cache

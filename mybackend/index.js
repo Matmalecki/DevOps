@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const redisClient = redis.createClient({
-    host: "myredis",
+    host: "myredis-clusterip",
     port: 6379,
 });
 
@@ -22,6 +22,18 @@ redisClient.on("error", (err) => {
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
+});
+
+app.get("/redis", (req, res) => {
+    redisClient.set("smoketest", "a1b2c3");
+    redisClient.get("smoketest", (err, result) => {
+        if (err){
+            res.send("Redis is not loaded");
+        }
+        if (result == "a1b2c3"){
+            res.send("Redis is loaded correctly");
+        }
+    });
 });
 
 const searchInCache =  (request, response) => {
