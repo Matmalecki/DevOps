@@ -4,6 +4,6 @@ metadata:
   name: mypostgres-config
 
 data:
-  PGHOST: postgres
+  PGHOST: postgres-cluster-ip
   PGUSER: postgres
   PGDATABASE: postgres

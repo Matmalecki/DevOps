@@ -4,7 +4,7 @@ const pgClient = new Pool({
     user: "postgres",
     password: "qwe123qwe123",
     data: "postgres",
-    host: "postgres",
+    host: "postgres-cluster-ip",
     port: "5432",
 });
 
