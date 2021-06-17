@@ -2,14 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const redis = require('redis');
 const pool = require('./postgres_manager');
-
+const constants = require('./constants');
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const redisClient = redis.createClient({
-    host: "myredis-clusterip",
-    port: 6379,
+    host: constants.redisHost,
+    port: constants.redisPort
 });
 
 redisClient.on('connect', () => {
@@ -22,6 +22,10 @@ redisClient.on("error", (err) => {
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
+});
+
+app.get("/constants", (req, res) => {
+    res.send(constants.pgPassword);
 });
 
 app.get("/redis", (req, res) => {

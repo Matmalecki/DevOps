@@ -1,11 +1,12 @@
 const { Pool } = require('pg');
+const constants = require('./constants');
 
 const pgClient = new Pool({
-    user: "postgres",
-    password: "qwe123qwe123",
-    data: "postgres",
-    host: "postgres-cluster-ip",
-    port: "5432",
+    user: constants.pgUser,
+    password: constants.pgPassword,
+    data: constants.pgData,
+    host: constants.pgHost,
+    port: constants.pgPort,
 });
 
 pgClient.on("error", () => {

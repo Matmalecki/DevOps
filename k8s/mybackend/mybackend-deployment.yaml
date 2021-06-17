@@ -17,6 +17,30 @@ spec:
       containers:
         - image: matmalecki/mybackend
           name: my-mybackend-container
+          env:
+            - name: REDIS_HOST
+              value: myredis-cluster-ip
+            - name: REDIS_PORT
+              value: '6379'
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mypostgres-config
+                  key: PGHOST
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: mypostgres-config
+                  key: PGDATABASE
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: mypostgres-config                  
+                  key: PGUSER
+            - name: POSTGRES_PORT
+              value: '5432'
+            - name: POSTGRES_PASSWORD
+              value: 'qwe123qwe123'
           
   replicas: 3
   selector:

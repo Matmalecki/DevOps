@@ -6,11 +6,11 @@ services:
   mypostgres:
     image: 'postgres:alpine'
     environment: 
-      - POSTGRES_PASSWORD=qwe123qwe
+      - POSTGRES_PASSWORD=qwe123qwe123
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
     volumes:
-      - /pg_data/:/var/lib/postgresql/data
+      - C:\Users\mateu\Documents\TechnologieDevops\pg_data/:/var/lib/postgresql/data
   mybackend:
     build:
       dockerfile: Dockerfile
@@ -19,11 +19,13 @@ services:
       - /opt/app/node_modules
       - C:\Users\mateu\Documents\TechnologieDevops\DevOps\mybackend/:/opt/app
     environment:
-      - POSTGRES_PASSWORD=qwe123qwe
+      - POSTGRES_PASSWORD=qwe123qwe123
       - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres 
-      - REDIS_HOST=myredis
+      - POSTGRES_USER=postgres
       - POSTGRES_HOST=mypostgres
+      - POSTGRES_PORT=5432
+      - REDIS_HOST=myredis
+      - REDIS_PORT=6379
   mynginx:
       restart: always
       build:
