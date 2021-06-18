@@ -8,29 +8,45 @@ const Books = (props) => {
     const [author, setAuthor] = useState(props.author);
     const [search, setSearch] = useState("");
     
-    useEffect(()=> {
+    useEffect(() => {
         axios.get('api/book')
             .then(response => setPosts(response.data))
             .catch(error => console.log(error));
     },[]);
 
-    const deletePost = (id) => {
-        axios.delete(`api/book/${id}`)
-            .then(response => setPosts(response.data))
+    const deletePost = (targetId) => {
+        axios.delete(`api/book/${targetId}`)
+            .then(response => {
+                const newPosts = posts.filter(x => x.id === targetId);
+                setPosts(newPosts);
+                console.log(response);
+            })   
             .catch(error => console.log(error));
     };
 
 
     const handleSubmit = (event) => {
         console.log(`Dane do wyslania ${title} oraz ${author}`);
+        const newBook = {name:title, author:author};
         if (id != null)
         {
-            axios.put(`api/book/${id}`, {name:title, author:author})
-                .then(response => console.log(response))
+            axios.put(`api/book/${id}`, newBook)
+                .then(response => {
+                    const newList = posts.map(x => {
+                            if (x.id !== id) return x; 
+                            else return response.data[0];
+                        }  
+                    );
+                    setPosts(newList);            
+                    console.log(response.data);
+                })   
                 .catch(error => console.log(error));
         } else {
-            axios.post('api/', {name:title, author:author})
-                .then(response => console.log(response))
+            axios.post('api/', newBook)
+                .then(response => {
+                    setPosts([...posts, response.data[0]]);
+                    console.log(response.data);
+                })    
                 .catch(error => console.log(error)); 
         }
         setAuthor("");
