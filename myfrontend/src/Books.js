@@ -62,26 +62,42 @@ const Books = (props) => {
     };
 
     return (<div> 
-                <input type='text' value={id} disabled={true}/> 
-                <div>
-                    <p>Tytuł</p>
-                    <input type='text' value={title} onChange={event=>setTitle(event.target.value)}/> 
+                <div className="div-table-row">
+                    <div className="div-table-col"> Wyszukaj </div>
+                    <input type='text' value={search} onChange={event=>setSearch(event.target.value)}/>
                 </div>
-                <div>
-                    <p>Autor</p>
-                    <input type='text' value={author} onChange={event=>setAuthor(event.target.value)}/> 
+                <br/>
+                <div classname="div-table">
+                    <div className="div-table-row">
+                        <div className="div-table-col">ID</div>
+                        <div className="div-table-col">Tytuł</div>
+                        <div className="div-table-col">Autor</div>
+                    </div>
+                    {posts.filter(post => post.title.includes(search) || post.author.includes(search)).sort((x,y) => x.id > y.id)                    
+                        .map(post => (
+                            <div className="div-table-row" key={post.id}>
+                                <div className="div-table-col">{post.id}</div>
+                                <div className="div-table-col">{post.title}</div>
+                                <div className="div-table-col">{post.author}</div>
+                                <div className="div-table-col">
+                                <button onClick={() => deletePost(post.id)}>Usuń</button>
+                                <button onClick={() => setUpdatedPost(post)}>Aktualizuj</button></div>  
+                            </div>
+                    ))}
                 </div>
-                <input type='submit' value='OK' onClick={handleSubmit}/>
-                {posts.filter(post => post.title.includes(search) || post.author.includes(search))
-                    .map(post => (
-                        <div key={post.id}>
-                            {post.title}, {post.author}
-                            <button onClick={() => deletePost(post.id)}>X</button>
-                            <button onClick={() => setUpdatedPost(post)}>Update</button>
+                
+                <br/>
+                <div className="div-table-row">
+                    <div className="div-table-col">Tytuł</div>
+                        <div className="div-table-col">
+                            <input type='text' value={title} onChange={event=>setTitle(event.target.value)}/> 
+                        </div>    
+                    <div className="div-table-col">Autor</div>
+                        <div className="div-table-col">
+                            <input type='text' value={author} onChange={event=>setAuthor(event.target.value)}/> 
                         </div>
-                ))}
-                <p>Wyszukaj</p>
-                <input type='text' value={search} onChange={event=>setSearch(event.target.value)}/>
+                    <input type='submit' value='OK' onClick={handleSubmit}/>
+                </div>
             </div>
     );
 };
