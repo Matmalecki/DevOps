@@ -77,7 +77,7 @@ const deleteBook = async (request, response) => {
     const id = parseInt(request.params.id);
     const result = await pgClient.query('DELETE FROM books WHERE id = $1', [id]);
     redisClient.del(id);
-    response.status(200);
+    response.status(200).send(`Deleted id ${id}`);
 };
 
 const updateBook = async (request, response) => {

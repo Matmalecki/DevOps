@@ -17,7 +17,7 @@ const Books = (props) => {
     const deletePost = (targetId) => {
         axios.delete(`api/book/${targetId}`)
             .then(response => {
-                const newPosts = posts.filter(x => x.id === targetId);
+                const newPosts = posts.filter(x => x.id !== targetId);
                 setPosts(newPosts);
                 console.log(response);
             })   
