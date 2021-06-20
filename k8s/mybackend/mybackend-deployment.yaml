@@ -40,7 +40,10 @@ spec:
             - name: POSTGRES_PORT
               value: '5432'
             - name: POSTGRES_PASSWORD
-              value: 'qwe123qwe123'
+              valueFrom:
+                secretKeyRef:
+                  name: myapp-secret
+                  key: PGPASSWORD
           
   replicas: 3
   selector:
